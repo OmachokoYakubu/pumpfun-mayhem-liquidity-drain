@@ -34,7 +34,7 @@ fi
 
 # 3. Impact Simulation (Mathematical Proof)
 echo "[3/4] Running Property-Based Insolvency Fuzzer..."
-go run ../fuzzer.go
+go run ./fuzzer.go
 
 # 4. Exploit Reachability (The 'Smoking Gun')
 echo "[4/4] Verifying Mayhem Authority Connection..."
