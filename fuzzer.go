@@ -1,7 +1,4 @@
-// Hans Pipeline v3.1: Phase 4 Mathematical Fuzzing
-// Lead Researcher: Omachoko Yakubu
-// Purpose: Verify Solvency Invariant under Mayhem Mode reserve manipulation.
-
+// pump-fun: Mathematical verification of bonding curve insolvency under reserve manipulation.
 package main
 
 import (
