@@ -1,3 +1,7 @@
+// Hans Pipeline v3.1: Phase 4 Mathematical Fuzzing
+// Lead Researcher: Omachoko Yakubu
+// Purpose: Verify Solvency Invariant under Mayhem Mode reserve manipulation.
+
 package main
 
 import (
