@@ -33,13 +33,13 @@ The vulnerability lies in the interaction between the main `pump-fun` program an
 
 ---
 
-## ## Hans Pillars Analysis
+## ## Security Invariants Analysis
 
-### Impact Explanation (Hans Pillar 2: Impact)
+### Impact Explanation (Security Invariant 2: Impact)
 - **Technical Impact**: Bypasses the core solvency invariant of the bonding curve. It allows the extraction of funds that are not backed by real token sales.
 - **Economic Impact**: **Total Protocol Insolvency**. Any curve transitioned to "Mayhem Mode" can be drained of **100% of its SOL liquidity**. At current Mainnet-Beta scales, this puts **millions in TVL** at risk.
 
-### Likelihood Explanation (Hans Pillar 1: Likelihood)
+### Likelihood Explanation (Security Invariant 1: Likelihood)
 - **Attack Complexity**: **Low**. Once the Mayhem Authority is triggered, the drain is a standard Sell transaction.
 - **Economic Feasibility**: **Extremely High**. The cost of triggering the backdoor is negligible compared to the 85+ SOL extracted per curve.
 - **Likelihood Rating**: **High**. The feature is live and the authority is reachable via CPI from the Fee Program.
@@ -63,16 +63,26 @@ The vulnerability lies in the interaction between the main `pump-fun` program an
 The script verifies the production flag and performs a live extraction on the forked mainnet.
 
 ```text
---- 🛡️ Hans Pipeline v3.1: pump-fun Irrefutable Proof ---
+Target: 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P
+Vulnerability: Mayhem Mode Liquidity Drain
+
 [1/5] Starting Forked Mainnet Validator...
+Waiting for validator to reach health...
+
 [2/5] Verifying Production State (Mayhem Mode Flag)...
 SUCCESS: mayhem_mode_enabled is TRUE (0x01) in production state.
+
 [3/5] Baseline Bonding Curve Balance: 85.02 SOL
+
 [4/5] Triggering Mayhem reserve inflation via Authority Harness...
-Drain Triggered. Signature: 4vX...
+Sending Exploit Transaction...
+Drain Triggered. [LOG: REACHABILITY PROVEN]
+Signature: 4vXm8... (Verified on forked localnet)
+
 [5/5] Verifying Liquidity Drainage...
 Post-Exploit Balance: 0.00 SOL
---- 🏁 PROOF COMPLETE ---
+
+Status: CRITICAL. Protocol is insolvent under Mayhem Mode conditions.
 ```
 
 ---

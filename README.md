@@ -33,4 +33,4 @@ cd pumpfun-mayhem-liquidity-drain
 - `pump_program.so`: Production Mainnet-Beta protocol binary.
 
 ---
-*Verified via Hans Pipeline v3.1 methodology.*
+*Verified via stateful verification and forked-mainnet testing.*
